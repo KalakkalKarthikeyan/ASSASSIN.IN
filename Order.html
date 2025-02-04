@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Order Summary</h1>
+        <div id="assassin-details"></div>
+        <button onclick="window.location.href='index.html'">Go Back</button>
+    </div>
+
+    <script>
+        const assassin = JSON.parse(localStorage.getItem("selectedAssassin"));
+        document.getElementById("assassin-details").innerHTML = `
+            <img src="${assassin.image}" alt="${assassin.name}" style="width:200px; border-radius:10px;">
+            <h2>${assassin.name}</h2>
+            <p><strong>Skills:</strong> ${assassin.description}</p>
+            <p><strong>Price:</strong> ${assassin.price}</p>
+        `;
+    </script>
+</body>
+</html>
