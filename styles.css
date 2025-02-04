@@ -1,11 +1,8 @@
 body {
     font-family: Arial, sans-serif;
-    background-image: url("Add link for background");
+    background-image: url("https://raw.githubusercontent.com/KalakkalKarthikeyan/ASSASSIN.COM/refs/heads/main/360_F_370353329_Ft6oFyVkjYi2k0XTwlWh5RIx2AhtL2vR.jpg");
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    width: 100vw;
     color: white;
     text-align: center;
     margin: 0;
@@ -85,4 +82,3 @@ button:hover {
 .order-button:hover {
     background-color: orange;
 }
-
