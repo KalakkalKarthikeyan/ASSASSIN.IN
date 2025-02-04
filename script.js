@@ -3,7 +3,7 @@ const assassins = [
     { name: "Divyesh", description: "Close combat master, specializes in hand-to-hand fights and pressure point attacks.", price: "$799", image: "Photo of Divyesh" },
     { name: "Mithun", description: "Unavailable (This assassin is currently on another mission).", price: "N/A", image: "Photo of Mithun" },
     { name: "Radha Krishnan", description: "Most Paid Assassin, Eraser Act Specialist (attacks by throwing erasers), skilled in sniper attacks and strategic eliminations.", price: "$1999", image: "Photo of Radha Krishnan" },
-    { name: "Sanjay", description: "Tactical genius, specializes in ambushes and mind games to take down targets.", price: "$999", image: "Photo of Sanjay" },
+    { name: "Sanjay", description: "Tactical genius, specializes in ambushes and mind games to take down targets.", price: "$999", image: "https://raw.githubusercontent.com/KalakkalKarthikeyan/ASSASSIN.COM/refs/heads/main/IMG_20250204_200058%7E2.jpg" },
     { name: "Karthikeyan", description: "Smile Killer & Most Ordered Assassin, takes down targets with a deadly grin, uses psychological warfare.", price: "$1299", image: "Photo of Karthikeyan" },
     { name: "Vasanth Raj", description: "Most Low Paid & Worst Skilled Assassin, often misses his target, clumsy with weapons, but still tries his best.", price: "$599", image: "Photo of Vasanth Raj" },
     { name: "Vikaash", description: "Gadget specialist, known for setting up clever traps and using high-tech gear for the job.", price: "$1099", image: "Photo of Vikaash" }
