@@ -1,9 +1,11 @@
 body {
     font-family: Arial, sans-serif;
-    background-image: url("https://raw.githubusercontent.com/KalakkalKarthikeyan/ASSASSIN.COM/refs/heads/main/images%20(1).jpeg");
+    background-image: url("Add link for background");
     background-size: cover;
-    background-repeat: no-repeat;
     background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
     color: white;
     text-align: center;
     margin: 0;
