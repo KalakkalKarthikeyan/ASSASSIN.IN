@@ -5,7 +5,7 @@ const assassins = [
     { name: "Radha Krishnan", description: "Most Paid Assassin, Eraser Act Specialist (attacks by throwing erasers), skilled in sniper attacks and strategic eliminations.", price: "$1999", image: "Photo of Radha Krishnan" },
     { name: "Sanjay", description: "Tactical genius, specializes in ambushes and mind games to take down targets.", price: "$999", image: "https://raw.githubusercontent.com/KalakkalKarthikeyan/ASSASSIN.COM/refs/heads/main/IMG_20250204_200058%7E2.jpg" },
     { name: "Karthikeyan", description: "Smile Killer & Most Ordered Assassin, takes down targets with a deadly grin, uses psychological warfare.", price: "$1299", image: "Photo of Karthikeyan" },
-    { name: "Vasanth Raj", description: "Most Low Paid & Worst Skilled Assassin, often misses his target, clumsy with weapons, but still tries his best.", price: "$599", image: "Photo of Vasanth Raj" },
+    { name: "Vasanth Raj", description: "Most Low Paid & Worst Skilled Assassin, often misses his target, clumsy with weapons, but still tries his best.", price: "$599", image: "https://raw.githubusercontent.com/KalakkalKarthikeyan/ASSASSIN.COM/refs/heads/main/Screenshot%202025-02-04%20211941.png" },
     { name: "Vikaash", description: "Gadget specialist, known for setting up clever traps and using high-tech gear for the job.", price: "$1099", image: "https://raw.githubusercontent.com/KalakkalKarthikeyan/ASSASSIN.COM/refs/heads/main/IMG_20250204_200112%7E2.jpg" }
 ];
 
