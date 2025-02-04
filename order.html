@@ -3,24 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Details</title>
+    <title>Order Confirmation</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Order Summary</h1>
-        <div id="assassin-details"></div>
-        <button onclick="window.location.href='index.html'">Go Back</button>
+        <h1>ASSASSIN ORDERED!</h1>
+        <div id="orderDetails"></div>
+        <button onclick="window.location.href='index.html'">Back to Home</button>
     </div>
 
     <script>
-        const assassin = JSON.parse(localStorage.getItem("selectedAssassin"));
-        document.getElementById("assassin-details").innerHTML = `
-            <img src="${assassin.image}" alt="${assassin.name}" style="width:200px; border-radius:10px;">
-            <h2>${assassin.name}</h2>
-            <p><strong>Skills:</strong> ${assassin.description}</p>
-            <p><strong>Price:</strong> ${assassin.price}</p>
-        `;
+        function getQueryParams() {
+            let params = new URLSearchParams(window.location.search);
+            return {
+                name: params.get("name"),
+                photo: params.get("photo"),
+                price: params.get("price"),
+                desc: params.get("desc")
+            };
+        }
+
+        window.onload = function() {
+            let details = getQueryParams();
+            let orderDiv = document.getElementById("orderDetails");
+            
+            orderDiv.innerHTML = `
+                <img src="${details.photo}" alt="${details.name}" style="width:200px; height:200px; border-radius:10px;">
+                <h2>${details.name}</h2>
+                <p>${details.desc}</p>
+                <h3>Price: ${details.price}</h3>
+            `;
+        };
     </script>
 </body>
 </html>
