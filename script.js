@@ -1,5 +1,5 @@
 const assassins = [
-    { name: "Avval", description: "Stealth expert, skilled in silent takedowns and disappearing without a trace.", price: "$899", image: "Photo of Avval" },
+    { name: "Avval", description: "Stealth expert, skilled in silent takedowns and disappearing without a trace.", price: "$899", image: "https://raw.githubusercontent.com/KalakkalKarthikeyan/ASSASSIN.COM/refs/heads/main/IMG_20250204_200356%7E2.jpg" },
     { name: "Divyesh", description: "Close combat master, specializes in hand-to-hand fights and pressure point attacks.", price: "$799", image: "Photo of Divyesh" },
     { name: "Mithun", description: "Unavailable (This assassin is currently on another mission).", price: "N/A", image: "Photo of Mithun" },
     { name: "Radha Krishnan", description: "Most Paid Assassin, Eraser Act Specialist (attacks by throwing erasers), skilled in sniper attacks and strategic eliminations.", price: "$1999", image: "Photo of Radha Krishnan" },
