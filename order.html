@@ -36,27 +36,52 @@
                 "sharpening his plastic knife 🔪",
                 "disguised as a delivery guy 🚴‍♂️",
                 "hiding in a bush waiting for the right moment 🌳",
-                "stalking the target from a rooftop 🏢"
+                "stalking the target from a rooftop 🏢",
+                "at the gym getting stronger for the mission 💪",
+                "practicing ninja moves in a parking lot 🥷",
+                "checking Google Maps because he got lost 🗺️",
+                "asking Siri for assassination tips 📱",
+                "watching YouTube tutorials on ‘How to be a better assassin’ 🎥",
+                "getting distracted by a cat on the street 🐈"
             ];
             let index = 0;
             setInterval(() => {
                 document.getElementById("tracking-info").innerText = "Assassin is " + locations[index];
                 index = (index + 1) % locations.length;
-            }, 3000);
+            }, 10000); // Update every 10 seconds
         }
 
         function startFakeChat() {
             let chatBox = document.getElementById("chat-box");
+            let chatInput = document.getElementById("chat-input");
+            let chatButton = document.getElementById("chat-submit");
             let responses = [
                 "Do you want a silent takedown or an explosive entrance?",
                 "Should I wear a mask or go in as a pizza delivery guy?",
                 "Should I leave a calling card like in the movies? 😎",
-                "Any last words for your target? 😂"
+                "Any last words for your target? 😂",
+                "Should I use a laser pointer to distract the target first? 🔴",
+                "Do you prefer a sneak attack or a dramatic entrance? 🎭"
             ];
-            setInterval(() => {
-                let randomMessage = responses[Math.floor(Math.random() * responses.length)];
-                chatBox.innerHTML += `<p>💬 Assassin: ${randomMessage}</p>`;
-            }, 5000);
+            let currentQuestion = "";
+
+            function askNewQuestion() {
+                currentQuestion = responses[Math.floor(Math.random() * responses.length)];
+                chatBox.innerHTML += `<p>💬 Assassin: ${currentQuestion}</p>`;
+            }
+
+            chatButton.addEventListener("click", function() {
+                let userResponse = chatInput.value.trim();
+                if (userResponse) {
+                    chatBox.innerHTML += `<p>🗨️ You: ${userResponse}</p>`;
+                    chatInput.value = "";
+                    setTimeout(askNewQuestion, 2000);
+                } else {
+                    alert("Answer the question first before getting another one!");
+                }
+            });
+
+            askNewQuestion();
         }
     </script>
 </head>
@@ -81,6 +106,8 @@
         <div id="chat-section" style="display:none;">
             <h2>Live Chat with Assassin</h2>
             <div id="chat-box"></div>
+            <input type="text" id="chat-input" placeholder="Type your response...">
+            <button id="chat-submit">Send</button>
         </div>
     </div>
 
