@@ -9,13 +9,17 @@
 <body>
     <div class="container">
         <h1>Order Assassin</h1>
+        
         <p class="subtitle">Where should we send the assassin?</p>
         <input type="text" id="location" placeholder="Enter location">
         
         <p class="subtitle">Who is the target?</p>
         <input type="text" id="target" placeholder="Enter the target's name">
         
-        <button id="choose-assassin">Choose A Assassin</button>
+        <p class="subtitle">Upload Target's Photo</p>
+        <input type="file" id="target-photo" accept="image/*">
+        
+        <button id="choose-assassin">Choose An Assassin</button>
         
         <div id="assassin-slider" class="slider">
             <!-- Assassins will be loaded here -->
