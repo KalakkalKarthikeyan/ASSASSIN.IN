@@ -9,23 +9,40 @@
 <body>
     <div class="container">
         <h1>Order Assassin</h1>
-        
+
         <p class="subtitle">Where should we send the assassin?</p>
         <input type="text" id="location" placeholder="Enter location">
         
         <p class="subtitle">Who is the target?</p>
         <input type="text" id="target" placeholder="Enter the target's name">
-        
-        <p class="subtitle">Upload Target's Photo</p>
+
+        <p class="subtitle">Upload target's photo:</p>
         <input type="file" id="target-photo" accept="image/*">
-        
-        <button id="choose-assassin">Choose An Assassin</button>
+        <br>
+        <img id="photo-preview" style="display: none; max-width: 200px; margin-top: 10px; border-radius: 5px;">
+
+        <button id="choose-assassin">Choose A Assassin</button>
         
         <div id="assassin-slider" class="slider">
             <!-- Assassins will be loaded here -->
         </div>
     </div>
 
+    <script>
+        document.getElementById("target-photo").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const photoPreview = document.getElementById("photo-preview");
+                    photoPreview.src = e.target.result;
+                    photoPreview.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+    
     <script src="script.js"></script>
 </body>
 </html>
