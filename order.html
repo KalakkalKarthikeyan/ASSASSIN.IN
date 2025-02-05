@@ -10,6 +10,20 @@
     <div class="container">
         <h1>Order Summary</h1>
         <div id="assassin-details"></div>
+
+        <button onclick="showPaymentForm()">Pay Now And Book Your Assassin</button>
+
+        <div id="payment-form" style="display: none;">
+            <h2>Enter Your Details</h2>
+            <input type="text" id="user-name" placeholder="Enter your name" required>
+            <input type="number" id="user-age" placeholder="Enter your age" required>
+            <input type="date" id="assassin-date" required>
+            <input type="text" id="card-info" placeholder="Enter card info" required>
+            <button onclick="processOrder()">Submit</button>
+        </div>
+
+        <p id="order-success" style="display: none; color: green; font-weight: bold;">Order Successful!</p>
+
         <button onclick="window.location.href='index.html'">Go Back</button>
     </div>
 
@@ -21,6 +35,15 @@
             <p><strong>Skills:</strong> ${assassin.description}</p>
             <p><strong>Price:</strong> ${assassin.price}</p>
         `;
+
+        function showPaymentForm() {
+            document.getElementById("payment-form").style.display = "block";
+        }
+
+        function processOrder() {
+            document.getElementById("payment-form").style.display = "none";
+            document.getElementById("order-success").style.display = "block";
+        }
     </script>
 </body>
 </html>
