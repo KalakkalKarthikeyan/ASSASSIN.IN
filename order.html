@@ -11,45 +11,34 @@
         <h1>Order Summary</h1>
         <div id="assassin-details"></div>
         <button onclick="window.location.href='index.html'">Go Back</button>
-        <button id="pay-now">Pay Now And Book Your Assassin</button>
 
-        <!-- Payment Form (Hidden Initially) -->
-        <div id="payment-form" style="display: none;">
-            <h2>Enter Payment Details</h2>
-            <label>Name:</label>
-            <input type="text" id="user-name" placeholder="Your Name">
-            <label>Age:</label>
-            <input type="number" id="user-age" placeholder="Your Age">
-            <label>Date:</label>
-            <input type="date" id="order-date">
-            <label>Card Info:</label>
-            <input type="text" id="card-info" placeholder="Card Number">
-            <button id="confirm-payment">Confirm Payment</button>
+        <h2>Payment</h2>
+        <label for="age">Enter Your Age:</label>
+        <input type="number" id="age" placeholder="Enter age">
+        <button onclick="validateAge()">Proceed to Payment</button>
+        <p id="age-message" style="color:red;"></p>
+
+        <div id="payment-form" style="display:none;">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter your name">
+            <label for="date">Choose Date:</label>
+            <input type="date" id="date">
+            <button onclick="orderSuccess()">Pay Now And Book Your Assassin</button>
         </div>
 
-        <!-- Order Tracking -->
         <h2>Live Order Tracking</h2>
-        <p id="order-tracking">Assassin is preparing...</p>
+        <p id="tracking-status">Tracking order...</p>
 
-        <!-- Live Chat with Assassin -->
         <h2>Live Chat with Assassin</h2>
-        <div id="chat-box">
-            <p id="assassin-message">Waiting for the assassin to message...</p>
-            <input type="text" id="user-response" placeholder="Type your answer...">
-            <button id="send-response">Send</button>
-        </div>
+        <div id="chat-box"></div>
+        <input type="text" id="chat-input" placeholder="Your reply...">
+        <button onclick="sendReply()">Send</button>
 
-        <!-- Fake Customer Reviews -->
         <h2>Customer Reviews</h2>
-        <div id="reviews">
-            <p><strong>John Doe:</strong> "Excellent service! My problem was *permanently* solved."</p>
-            <p><strong>Jane Smith:</strong> "Fast and efficient. Worth every dollar!"</p>
-            <p><strong>Michael Brown:</strong> "Highly professional. 10/10 would order again!"</p>
-        </div>
+        <div id="reviews"></div>
     </div>
 
     <script>
-        // Load selected assassin
         const assassin = JSON.parse(localStorage.getItem("selectedAssassin"));
         document.getElementById("assassin-details").innerHTML = `
             <img src="${assassin.image}" alt="${assassin.name}" style="width:200px; border-radius:10px;">
@@ -58,69 +47,98 @@
             <p><strong>Price:</strong> ${assassin.price}</p>
         `;
 
-        // Payment Handling
-        document.getElementById("pay-now").addEventListener("click", () => {
-            document.getElementById("payment-form").style.display = "block";
-        });
+        function validateAge() {
+            const age = document.getElementById("age").value;
+            const message = document.getElementById("age-message");
+            const paymentForm = document.getElementById("payment-form");
 
-        document.getElementById("confirm-payment").addEventListener("click", () => {
-            alert("Order Successful! Your assassin will be dispatched soon.");
-            window.location.href = "index.html"; // Redirect to home after order
-        });
+            if (age < 18) {
+                message.innerHTML = [
+                    "You're too young to hire an assassin! Go watch cartoons instead.",
+                    "Nice try, kiddo. Finish your school homework first!",
+                    "Come back when you're old enough to vote, then we’ll talk.",
+                    "You need to be at least 18. We don’t do kindergarten revenge missions.",
+                    "Sorry, junior. Assassin work isn’t for toddlers."
+                ][Math.floor(Math.random() * 5)];
+                paymentForm.style.display = "none";
+            } else {
+                message.innerHTML = "";
+                paymentForm.style.display = "block";
+            }
+        }
 
-        // Live Order Tracking
+        function orderSuccess() {
+            alert("Order Successful! Your assassin is on the way.");
+        }
+
         const locations = [
             "Assassin is currently at Starbucks drinking coffee.",
-            "Assassin is sharpening their weapons.",
-            "Assassin is on a motorcycle speeding towards the target.",
-            "Assassin is stuck in traffic, but don’t worry, they’ll make it.",
-            "Assassin is outside the target’s house, waiting for the signal.",
-            "Assassin is double-checking the hit list for accuracy."
+            "Assassin is stuck in traffic, honking aggressively.",
+            "Assassin took a detour to get snacks.",
+            "Assassin is in the gym, warming up for the mission.",
+            "Assassin is watching a YouTube tutorial on 'How to be a better assassin.'",
+            "Assassin is arguing with Google Maps.",
+            "Assassin accidentally took the wrong flight, coming soon!",
+            "Assassin is doing yoga before the job for better focus."
         ];
 
-        let locationIndex = 0;
+        let usedLocations = [];
         function updateTracking() {
-            if (locationIndex < locations.length) {
-                document.getElementById("order-tracking").innerText = locations[locationIndex];
-                locationIndex++;
-            }
+            if (usedLocations.length === locations.length) return;
+            let randomLocation;
+            do {
+                randomLocation = locations[Math.floor(Math.random() * locations.length)];
+            } while (usedLocations.includes(randomLocation));
+            usedLocations.push(randomLocation);
+            document.getElementById("tracking-status").innerText = randomLocation;
         }
-        setInterval(updateTracking, 5000); // Update every 5 seconds
+        setInterval(updateTracking, 5000);
+        updateTracking();
 
-        // Live Chat with Assassin
-        const questions = [
+        const assassinQuestions = [
             "Do you want a silent takedown or an explosive entrance?",
             "Should I wear a mask or go in as a pizza delivery guy?",
-            "Would you like a stealth approach or a public warning?",
-            "Should I leave a calling card or make it look like an accident?",
-            "Would you prefer quick and clean, or slow and painful?"
+            "Would you like me to use a banana as a weapon? (Very effective)",
+            "Should I say a cool one-liner after the job?",
+            "Would you like a dramatic escape or a casual walk away?"
         ];
 
-        let askedQuestions = new Set();
+        let askedQuestions = [];
         function askQuestion() {
-            if (askedQuestions.size < questions.length) {
-                let question;
-                do {
-                    question = questions[Math.floor(Math.random() * questions.length)];
-                } while (askedQuestions.has(question));
-
-                askedQuestions.add(question);
-                document.getElementById("assassin-message").innerText = question;
-            } else {
-                document.getElementById("assassin-message").innerText = "No more questions. Assassin is on the way!";
-            }
+            if (askedQuestions.length === assassinQuestions.length) return;
+            let question;
+            do {
+                question = assassinQuestions[Math.floor(Math.random() * assassinQuestions.length)];
+            } while (askedQuestions.includes(question));
+            askedQuestions.push(question);
+            document.getElementById("chat-box").innerHTML = `<p><strong>Assassin:</strong> ${question}</p>`;
         }
 
-        document.getElementById("send-response").addEventListener("click", () => {
-            const response = document.getElementById("user-response").value.trim();
-            if (response) {
-                askQuestion();
-                document.getElementById("user-response").value = "";
-            }
-        });
+        function sendReply() {
+            const input = document.getElementById("chat-input");
+            const reply = input.value.trim();
+            if (reply === "") return;
+            const chatBox = document.getElementById("chat-box");
+            chatBox.innerHTML += `<p><strong>You:</strong> ${reply}</p>`;
+            input.value = "";
+            setTimeout(askQuestion, 1000);
+        }
 
-        // Start first question
         askQuestion();
+
+        const reviews = [
+            "Agent47Fan – 'Assassin even offered me a discount for bulk orders. Great loyalty program!'",
+            "Mr. X – 'They said ‘no loose ends.’ Now my cat is missing too...'",
+            "Anonymous – 'I wanted a stealth kill, but my assassin made it look like an accident. 5/5 realism!'",
+            "NotTheCops – 'I swear, I just wanted a prank. Now my neighbor is missing… Should I be concerned?'",
+            "TomTheSurvivor – 'Assassin was so good, he even disappeared *after* finishing the job. Couldn’t even leave a review!'",
+            "LuckyMe – 'Ordered an assassin, but they convinced me to become one instead. Now I have a new career!'",
+            "WrongTarget – 'I accidentally put my own name as the target. Now I’m writing this from a secret location...'",
+            "MomSaysNo – 'Tried to book, but my mom said ‘No assassins until you finish your homework.’'"
+        ];
+
+        document.getElementById("reviews").innerHTML = reviews.map(r => `<p>${r}</p>`).join("");
+
     </script>
 </body>
 </html>
