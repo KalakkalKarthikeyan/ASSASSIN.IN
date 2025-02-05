@@ -13,27 +13,43 @@
         <button onclick="window.location.href='index.html'">Go Back</button>
         <button id="pay-now">Pay Now And Book Your Assassin</button>
 
-        <div id="payment-form" style="display:none;">
-            <h2>Payment Details</h2>
+        <!-- Payment Form (Hidden Initially) -->
+        <div id="payment-form" style="display: none;">
+            <h2>Enter Payment Details</h2>
+            <label>Name:</label>
             <input type="text" id="user-name" placeholder="Your Name">
+            <label>Age:</label>
             <input type="number" id="user-age" placeholder="Your Age">
-            <input type="date" id="assassin-date">
-            <input type="text" id="card-number" placeholder="Card Number">
+            <label>Date:</label>
+            <input type="date" id="order-date">
+            <label>Card Info:</label>
+            <input type="text" id="card-info" placeholder="Card Number">
             <button id="confirm-payment">Confirm Payment</button>
-            <p id="payment-message" style="color:red;"></p>
         </div>
 
+        <!-- Order Tracking -->
         <h2>Live Order Tracking</h2>
-        <p id="tracking-status">Waiting for assassin...</p>
+        <p id="order-tracking">Assassin is preparing...</p>
 
+        <!-- Live Chat with Assassin -->
         <h2>Live Chat with Assassin</h2>
-        <div id="chat-box"></div>
-        <input type="text" id="user-response" placeholder="Type your response...">
-        <button id="send-response">Send</button>
+        <div id="chat-box">
+            <p id="assassin-message">Waiting for the assassin to message...</p>
+            <input type="text" id="user-response" placeholder="Type your answer...">
+            <button id="send-response">Send</button>
+        </div>
+
+        <!-- Fake Customer Reviews -->
+        <h2>Customer Reviews</h2>
+        <div id="reviews">
+            <p><strong>John Doe:</strong> "Excellent service! My problem was *permanently* solved."</p>
+            <p><strong>Jane Smith:</strong> "Fast and efficient. Worth every dollar!"</p>
+            <p><strong>Michael Brown:</strong> "Highly professional. 10/10 would order again!"</p>
+        </div>
     </div>
 
     <script>
-        // Load Assassin Details
+        // Load selected assassin
         const assassin = JSON.parse(localStorage.getItem("selectedAssassin"));
         document.getElementById("assassin-details").innerHTML = `
             <img src="${assassin.image}" alt="${assassin.name}" style="width:200px; border-radius:10px;">
@@ -42,74 +58,68 @@
             <p><strong>Price:</strong> ${assassin.price}</p>
         `;
 
-        // Payment Form Logic
+        // Payment Handling
         document.getElementById("pay-now").addEventListener("click", () => {
             document.getElementById("payment-form").style.display = "block";
         });
 
         document.getElementById("confirm-payment").addEventListener("click", () => {
-            const age = document.getElementById("user-age").value;
-            const card = document.getElementById("card-number").value;
-            const message = document.getElementById("payment-message");
-
-            if (age < 18) {
-                message.textContent = "You're too young to hire an assassin! Go do your homework.";
-            } else if (card.length !== 16) {
-                message.textContent = "Invalid card number! Assassins don’t take fake cards.";
-            } else {
-                alert("Order Successful! Your assassin is on the way.");
-                document.getElementById("payment-form").style.display = "none";
-            }
+            alert("Order Successful! Your assassin will be dispatched soon.");
+            window.location.href = "index.html"; // Redirect to home after order
         });
 
-        // Live Order Tracking (Updates every 5 sec, not looping infinitely)
+        // Live Order Tracking
         const locations = [
-            "Buying a coffee at Starbucks...",
-            "Taking a nap under a tree...",
-            "Hiding in a bush near the target's location...",
-            "Stuck in traffic, blaming GPS...",
-            "Sharpening their knife at a local hardware store...",
-            "Disguised as a pizza delivery guy...",
-            "Hacking the target's WiFi for fun..."
+            "Assassin is currently at Starbucks drinking coffee.",
+            "Assassin is sharpening their weapons.",
+            "Assassin is on a motorcycle speeding towards the target.",
+            "Assassin is stuck in traffic, but don’t worry, they’ll make it.",
+            "Assassin is outside the target’s house, waiting for the signal.",
+            "Assassin is double-checking the hit list for accuracy."
         ];
 
-        let trackingIndex = 0;
+        let locationIndex = 0;
         function updateTracking() {
-            if (trackingIndex < locations.length) {
-                document.getElementById("tracking-status").textContent = locations[trackingIndex];
-                trackingIndex++;
-                setTimeout(updateTracking, 5000);
-            } else {
-                document.getElementById("tracking-status").textContent = "The assassin has arrived!";
+            if (locationIndex < locations.length) {
+                document.getElementById("order-tracking").innerText = locations[locationIndex];
+                locationIndex++;
             }
         }
-        setTimeout(updateTracking, 5000);
+        setInterval(updateTracking, 5000); // Update every 5 seconds
 
         // Live Chat with Assassin
-        const chatQuestions = [
+        const questions = [
             "Do you want a silent takedown or an explosive entrance?",
             "Should I wear a mask or go in as a pizza delivery guy?",
-            "Should I send a warning before eliminating the target?",
-            "Do you want the job done today or wait for a discount day?",
-            "Should I bring my pet cat as emotional support?"
+            "Would you like a stealth approach or a public warning?",
+            "Should I leave a calling card or make it look like an accident?",
+            "Would you prefer quick and clean, or slow and painful?"
         ];
 
-        let questionIndex = 0;
+        let askedQuestions = new Set();
         function askQuestion() {
-            if (questionIndex < chatQuestions.length) {
-                document.getElementById("chat-box").textContent = chatQuestions[questionIndex];
+            if (askedQuestions.size < questions.length) {
+                let question;
+                do {
+                    question = questions[Math.floor(Math.random() * questions.length)];
+                } while (askedQuestions.has(question));
+
+                askedQuestions.add(question);
+                document.getElementById("assassin-message").innerText = question;
+            } else {
+                document.getElementById("assassin-message").innerText = "No more questions. Assassin is on the way!";
             }
         }
 
         document.getElementById("send-response").addEventListener("click", () => {
-            const response = document.getElementById("user-response").value;
-            if (response.trim() !== "") {
-                questionIndex++;
+            const response = document.getElementById("user-response").value.trim();
+            if (response) {
                 askQuestion();
                 document.getElementById("user-response").value = "";
             }
         });
 
+        // Start first question
         askQuestion();
     </script>
 </body>
