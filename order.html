@@ -5,128 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Details</title>
     <link rel="stylesheet" href="styles.css">
-    <script>
-        function validateAndPay() {
-            let name = document.getElementById("name").value;
-            let age = document.getElementById("age").value;
-            let date = document.getElementById("date").value;
-            let card = document.getElementById("card").value;
-
-            if (!name || !age || !date || !card) {
-                alert("All fields are required! Don't try to skip!");
-                return;
-            }
-
-            if (age < 18) {
-                alert("You're too young to hire an assassin! Watch cartoons instead.");
-                return;
-            }
-
-            alert("Order Successful! Your assassin is on the way.");
-            document.getElementById("tracking-section").style.display = "block";
-            document.getElementById("chat-section").style.display = "block";
-            startFakeTracking();
-            startFakeChat();
-        }
-
-        function startFakeTracking() {
-            let locations = [
-                "at Starbucks drinking coffee ☕",
-                "stuck in traffic near McDonald's 🍔",
-                "sharpening his plastic knife 🔪",
-                "disguised as a delivery guy 🚴‍♂️",
-                "hiding in a bush waiting for the right moment 🌳",
-                "stalking the target from a rooftop 🏢",
-                "at the gym getting stronger for the mission 💪",
-                "practicing ninja moves in a parking lot 🥷",
-                "checking Google Maps because he got lost 🗺️",
-                "asking Siri for assassination tips 📱",
-                "watching YouTube tutorials on ‘How to be a better assassin’ 🎥",
-                "getting distracted by a cat on the street 🐈"
-            ];
-            
-            if (locations.length > 0) {
-                let randomIndex = Math.floor(Math.random() * locations.length);
-                document.getElementById("tracking-info").innerText = "Assassin is " + locations[randomIndex];
-                locations.splice(randomIndex, 1); // Remove the location so it doesn’t repeat
-            } else {
-                document.getElementById("tracking-info").innerText = "Assassin has reached the destination! 🎯";
-            }
-        }
-
-        function startFakeChat() {
-            let chatBox = document.getElementById("chat-box");
-            let chatInput = document.getElementById("chat-input");
-            let chatButton = document.getElementById("chat-submit");
-            let responses = [
-                "Do you want a silent takedown or an explosive entrance?",
-                "Should I wear a mask or go in as a pizza delivery guy?",
-                "Should I leave a calling card like in the movies? 😎",
-                "Any last words for your target? 😂",
-                "Should I use a laser pointer to distract the target first? 🔴",
-                "Do you prefer a sneak attack or a dramatic entrance? 🎭"
-            ];
-
-            function askNewQuestion() {
-                if (responses.length === 0) {
-                    chatBox.innerHTML += `<p>💬 Assassin: No more questions, I'm getting ready! 😎</p>`;
-                    chatInput.style.display = "none";
-                    chatButton.style.display = "none";
-                    return;
-                }
-                
-                let randomIndex = Math.floor(Math.random() * responses.length);
-                let question = responses[randomIndex];
-                responses.splice(randomIndex, 1); // Remove the question so it doesn’t repeat
-
-                chatBox.innerHTML += `<p>💬 Assassin: ${question}</p>`;
-                chatInput.disabled = false;
-                chatInput.focus();
-            }
-
-            chatButton.addEventListener("click", function() {
-                let userResponse = chatInput.value.trim();
-                if (userResponse) {
-                    chatBox.innerHTML += `<p>🗨️ You: ${userResponse}</p>`;
-                    chatInput.value = "";
-                    chatInput.disabled = true;
-                    setTimeout(askNewQuestion, 2000);
-                } else {
-                    alert("Answer the question first before getting another one!");
-                }
-            });
-
-            askNewQuestion();
-        }
-    </script>
 </head>
 <body>
     <div class="container">
         <h1>Order Summary</h1>
         <div id="assassin-details"></div>
         <button onclick="window.location.href='index.html'">Go Back</button>
+        <button id="pay-now">Pay Now And Book Your Assassin</button>
 
-        <h2>Payment Details</h2>
-        <label>Name: <input type="text" id="name"></label><br>
-        <label>Age: <input type="number" id="age"></label><br>
-        <label>Date of Execution: <input type="date" id="date"></label><br>
-        <label>Card Info: <input type="text" id="card"></label><br>
-        <button onclick="validateAndPay()">Pay Now And Book Your Assassin</button>
-
-        <div id="tracking-section" style="display:none;">
-            <h2>Live Order Tracking</h2>
-            <p id="tracking-info">Waiting for update...</p>
+        <div id="payment-form" style="display:none;">
+            <h2>Payment Details</h2>
+            <input type="text" id="user-name" placeholder="Your Name">
+            <input type="number" id="user-age" placeholder="Your Age">
+            <input type="date" id="assassin-date">
+            <input type="text" id="card-number" placeholder="Card Number">
+            <button id="confirm-payment">Confirm Payment</button>
+            <p id="payment-message" style="color:red;"></p>
         </div>
 
-        <div id="chat-section" style="display:none;">
-            <h2>Live Chat with Assassin</h2>
-            <div id="chat-box"></div>
-            <input type="text" id="chat-input" placeholder="Type your response...">
-            <button id="chat-submit">Send</button>
-        </div>
+        <h2>Live Order Tracking</h2>
+        <p id="tracking-status">Waiting for assassin...</p>
+
+        <h2>Live Chat with Assassin</h2>
+        <div id="chat-box"></div>
+        <input type="text" id="user-response" placeholder="Type your response...">
+        <button id="send-response">Send</button>
     </div>
 
     <script>
+        // Load Assassin Details
         const assassin = JSON.parse(localStorage.getItem("selectedAssassin"));
         document.getElementById("assassin-details").innerHTML = `
             <img src="${assassin.image}" alt="${assassin.name}" style="width:200px; border-radius:10px;">
@@ -134,6 +41,76 @@
             <p><strong>Skills:</strong> ${assassin.description}</p>
             <p><strong>Price:</strong> ${assassin.price}</p>
         `;
+
+        // Payment Form Logic
+        document.getElementById("pay-now").addEventListener("click", () => {
+            document.getElementById("payment-form").style.display = "block";
+        });
+
+        document.getElementById("confirm-payment").addEventListener("click", () => {
+            const age = document.getElementById("user-age").value;
+            const card = document.getElementById("card-number").value;
+            const message = document.getElementById("payment-message");
+
+            if (age < 18) {
+                message.textContent = "You're too young to hire an assassin! Go do your homework.";
+            } else if (card.length !== 16) {
+                message.textContent = "Invalid card number! Assassins don’t take fake cards.";
+            } else {
+                alert("Order Successful! Your assassin is on the way.");
+                document.getElementById("payment-form").style.display = "none";
+            }
+        });
+
+        // Live Order Tracking (Updates every 5 sec, not looping infinitely)
+        const locations = [
+            "Buying a coffee at Starbucks...",
+            "Taking a nap under a tree...",
+            "Hiding in a bush near the target's location...",
+            "Stuck in traffic, blaming GPS...",
+            "Sharpening their knife at a local hardware store...",
+            "Disguised as a pizza delivery guy...",
+            "Hacking the target's WiFi for fun..."
+        ];
+
+        let trackingIndex = 0;
+        function updateTracking() {
+            if (trackingIndex < locations.length) {
+                document.getElementById("tracking-status").textContent = locations[trackingIndex];
+                trackingIndex++;
+                setTimeout(updateTracking, 5000);
+            } else {
+                document.getElementById("tracking-status").textContent = "The assassin has arrived!";
+            }
+        }
+        setTimeout(updateTracking, 5000);
+
+        // Live Chat with Assassin
+        const chatQuestions = [
+            "Do you want a silent takedown or an explosive entrance?",
+            "Should I wear a mask or go in as a pizza delivery guy?",
+            "Should I send a warning before eliminating the target?",
+            "Do you want the job done today or wait for a discount day?",
+            "Should I bring my pet cat as emotional support?"
+        ];
+
+        let questionIndex = 0;
+        function askQuestion() {
+            if (questionIndex < chatQuestions.length) {
+                document.getElementById("chat-box").textContent = chatQuestions[questionIndex];
+            }
+        }
+
+        document.getElementById("send-response").addEventListener("click", () => {
+            const response = document.getElementById("user-response").value;
+            if (response.trim() !== "") {
+                questionIndex++;
+                askQuestion();
+                document.getElementById("user-response").value = "";
+            }
+        });
+
+        askQuestion();
     </script>
 </body>
 </html>
