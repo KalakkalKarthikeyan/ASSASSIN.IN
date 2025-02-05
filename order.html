@@ -5,26 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Details</title>
     <link rel="stylesheet" href="styles.css">
+    <script>
+        function validateAndPay() {
+            let name = document.getElementById("name").value;
+            let age = document.getElementById("age").value;
+            let date = document.getElementById("date").value;
+            let card = document.getElementById("card").value;
+
+            if (!name || !age || !date || !card) {
+                alert("All fields are required! Don't try to skip!");
+                return;
+            }
+
+            if (age < 18) {
+                alert("You're too young to hire an assassin! Watch cartoons instead.");
+                return;
+            }
+
+            alert("Order Successful! Your assassin is on the way.");
+            document.getElementById("tracking-section").style.display = "block";
+            document.getElementById("chat-section").style.display = "block";
+            startFakeTracking();
+            startFakeChat();
+        }
+
+        function startFakeTracking() {
+            let locations = [
+                "at Starbucks drinking coffee ☕",
+                "stuck in traffic near McDonald's 🍔",
+                "sharpening his plastic knife 🔪",
+                "disguised as a delivery guy 🚴‍♂️",
+                "hiding in a bush waiting for the right moment 🌳",
+                "stalking the target from a rooftop 🏢"
+            ];
+            let index = 0;
+            setInterval(() => {
+                document.getElementById("tracking-info").innerText = "Assassin is " + locations[index];
+                index = (index + 1) % locations.length;
+            }, 3000);
+        }
+
+        function startFakeChat() {
+            let chatBox = document.getElementById("chat-box");
+            let responses = [
+                "Do you want a silent takedown or an explosive entrance?",
+                "Should I wear a mask or go in as a pizza delivery guy?",
+                "Should I leave a calling card like in the movies? 😎",
+                "Any last words for your target? 😂"
+            ];
+            setInterval(() => {
+                let randomMessage = responses[Math.floor(Math.random() * responses.length)];
+                chatBox.innerHTML += `<p>💬 Assassin: ${randomMessage}</p>`;
+            }, 5000);
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <h1>Order Summary</h1>
         <div id="assassin-details"></div>
+        <button onclick="window.location.href='index.html'">Go Back</button>
 
-        <button onclick="showPaymentForm()">Pay Now And Book Your Assassin</button>
+        <h2>Payment Details</h2>
+        <label>Name: <input type="text" id="name"></label><br>
+        <label>Age: <input type="number" id="age"></label><br>
+        <label>Date of Execution: <input type="date" id="date"></label><br>
+        <label>Card Info: <input type="text" id="card"></label><br>
+        <button onclick="validateAndPay()">Pay Now And Book Your Assassin</button>
 
-        <div id="payment-form" style="display: none;">
-            <h2>Enter Your Details</h2>
-            <input type="text" id="user-name" placeholder="Enter your name" required>
-            <input type="number" id="user-age" placeholder="Enter your age" required>
-            <input type="date" id="assassin-date" required>
-            <input type="text" id="card-info" placeholder="Enter card info" required>
-            <button onclick="processOrder()">Submit</button>
+        <div id="tracking-section" style="display:none;">
+            <h2>Live Order Tracking</h2>
+            <p id="tracking-info">Waiting for update...</p>
         </div>
 
-        <p id="order-success" style="display: none; color: green; font-weight: bold;">Order Successful!</p>
-
-        <button onclick="window.location.href='index.html'">Go Back</button>
+        <div id="chat-section" style="display:none;">
+            <h2>Live Chat with Assassin</h2>
+            <div id="chat-box"></div>
+        </div>
     </div>
 
     <script>
@@ -35,15 +92,6 @@
             <p><strong>Skills:</strong> ${assassin.description}</p>
             <p><strong>Price:</strong> ${assassin.price}</p>
         `;
-
-        function showPaymentForm() {
-            document.getElementById("payment-form").style.display = "block";
-        }
-
-        function processOrder() {
-            document.getElementById("payment-form").style.display = "none";
-            document.getElementById("order-success").style.display = "block";
-        }
     </script>
 </body>
 </html>
