@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape Plan Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Escape Plan Generator</h1>
+        <p>Enter your location to get your perfect escape plan.</p>
+        <input type="text" id="location" placeholder="Enter your location">
+        <button onclick="generateEscape()">Get Escape Plan</button>
+        
+        <p id="escape-result"></p>
+        <button onclick="window.location.href='index.html'">Back to Home</button>
+    </div>
+
+    <script>
+        const escapePlans = [
+            "Run through the nearest McDonald's drive-thru and blend in with customers.",
+            "Use a disguise from a costume shop and leave as a clown.",
+            "Hide in a delivery truck and pretend to be a package.",
+            "Steal a scooter and escape like a pizza delivery guy.",
+            "Swim through the city canal and emerge in a different district."
+        ];
+
+        function generateEscape() {
+            let location = document.getElementById("location").value;
+            if (location === "") {
+                document.getElementById("escape-result").textContent = "Enter a location first!";
+            } else {
+                let randomPlan = escapePlans[Math.floor(Math.random() * escapePlans.length)];
+                document.getElementById("escape-result").textContent = `Escape Plan for ${location}: ${randomPlan}`;
+            }
+        }
+    </script>
+</body>
+</html>
