@@ -44,11 +44,14 @@
                 "watching YouTube tutorials on ‘How to be a better assassin’ 🎥",
                 "getting distracted by a cat on the street 🐈"
             ];
-            let index = 0;
-            setInterval(() => {
-                document.getElementById("tracking-info").innerText = "Assassin is " + locations[index];
-                index = (index + 1) % locations.length;
-            }, 10000); // Update every 10 seconds
+            
+            if (locations.length > 0) {
+                let randomIndex = Math.floor(Math.random() * locations.length);
+                document.getElementById("tracking-info").innerText = "Assassin is " + locations[randomIndex];
+                locations.splice(randomIndex, 1); // Remove the location so it doesn’t repeat
+            } else {
+                document.getElementById("tracking-info").innerText = "Assassin has reached the destination! 🎯";
+            }
         }
 
         function startFakeChat() {
@@ -63,11 +66,22 @@
                 "Should I use a laser pointer to distract the target first? 🔴",
                 "Do you prefer a sneak attack or a dramatic entrance? 🎭"
             ];
-            let currentQuestion = "";
 
             function askNewQuestion() {
-                currentQuestion = responses[Math.floor(Math.random() * responses.length)];
-                chatBox.innerHTML += `<p>💬 Assassin: ${currentQuestion}</p>`;
+                if (responses.length === 0) {
+                    chatBox.innerHTML += `<p>💬 Assassin: No more questions, I'm getting ready! 😎</p>`;
+                    chatInput.style.display = "none";
+                    chatButton.style.display = "none";
+                    return;
+                }
+                
+                let randomIndex = Math.floor(Math.random() * responses.length);
+                let question = responses[randomIndex];
+                responses.splice(randomIndex, 1); // Remove the question so it doesn’t repeat
+
+                chatBox.innerHTML += `<p>💬 Assassin: ${question}</p>`;
+                chatInput.disabled = false;
+                chatInput.focus();
             }
 
             chatButton.addEventListener("click", function() {
@@ -75,6 +89,7 @@
                 if (userResponse) {
                     chatBox.innerHTML += `<p>🗨️ You: ${userResponse}</p>`;
                     chatInput.value = "";
+                    chatInput.disabled = true;
                     setTimeout(askNewQuestion, 2000);
                 } else {
                     alert("Answer the question first before getting another one!");
