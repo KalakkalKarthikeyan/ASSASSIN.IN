@@ -1,5 +1,5 @@
 const assassins = [
-    { name: "Mithun Das", description: "Unavailable (This assassin is currently on another mission).", price: "$1000", image: "https://raw.githubusercontent.com/KalakkalKarthikeyan/ASSASSIN.COM/refs/heads/main/Screenshot%202025-02-04%20211910.png" },
+    { name: "Mithun Das", description: "Unavailable (This assassin is currently on another mission. Planning To Quit The Job).", price: "$1000", image: "https://raw.githubusercontent.com/KalakkalKarthikeyan/ASSASSIN.COM/refs/heads/main/Screenshot%202025-02-04%20211910.png" },
     { name: "Divyesh Das", description: "Close combat master, specializes in hand-to-hand fights and pressure point attacks.", price: "$799", image: "https://raw.githubusercontent.com/KalakkalKarthikeyan/ASSASSIN.COM/refs/heads/main/Copy%20of%20DIVYESH.JPG" },
     { name: "Hari Annan", description: "Master Mind, Uses bio technology.", price: "$910", image: "https://raw.githubusercontent.com/KalakkalKarthikeyan/ASSASSIN.COM/refs/heads/main/WhatsApp%20Image%202025-02-05%20at%2017.42.00_d1b27f94.jpg" },
     { name: "Radha Krishnan (Gang Leader)", description: "Most Paid Assassin, Eraser Act Specialist (attacks by throwing erasers), skilled in sniper attacks and strategic eliminations.", price: "$1999", image: "https://raw.githubusercontent.com/KalakkalKarthikeyan/ASSASSIN.COM/refs/heads/main/SPL%20RADHA%20KRISHNA.JPG" },
