@@ -21,12 +21,8 @@
         <br>
         <img id="photo-preview" style="display: none; max-width: 200px; margin-top: 10px; border-radius: 5px;">
 
-        <button id="submit-order">Submit Order</button>
-
-        <p id="statusMessage"></p>
-
-        <button id="choose-assassin">Choose An Assassin</button>
-
+        <button id="choose-assassin">Choose A Assassin</button>
+        
         <div id="assassin-slider" class="slider">
             <!-- Assassins will be loaded here -->
         </div>
@@ -45,38 +41,8 @@
                 reader.readAsDataURL(file);
             }
         });
-
-        document.getElementById("submit-order").addEventListener("click", async function() {
-            let name = document.getElementById("target").value;
-            let location = document.getElementById("location").value;
-            let photoFile = document.getElementById("target-photo").files[0];
-
-            if (!name || !location || !photoFile) {
-                alert("Please fill all fields and upload a photo!");
-                return;
-            }
-
-            let reader = new FileReader();
-            reader.onload = async function(e) {
-                let photoURL = e.target.result;
-
-                let formData = { name, location, photo: photoURL };
-                let googleSheetURL = "https://script.google.com/macros/s/AKfycbxmb0XJ4Teqg5uolh32cmvYn5sc0wgVrQA1mbBzWoZmAx31AdqGFWx0byd3ksqHKS4S/exec";  // Replace with your Web App URL
-
-                let response = await fetch(googleSheetURL, {
-                    method: "POST",
-                    body: JSON.stringify(formData),
-                    headers: { "Content-Type": "application/json" }
-                });
-
-                let result = await response.text();
-                document.getElementById("statusMessage").innerText = result === "Success" ? "Target Saved!" : "Error!";
-            };
-
-            reader.readAsDataURL(photoFile);
-        });
     </script>
-
+    
     <script src="script.js"></script>
 </body>
 </html>
