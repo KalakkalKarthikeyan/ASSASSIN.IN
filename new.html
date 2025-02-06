@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breaking News</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 BREAKING NEWS 🔥</h1>
+        <div id="news-article">
+            <p>Click the button below to generate a **random crime report** about your target!</p>
+        </div>
+        <button onclick="generateNews()">Generate News</button>
+        <button onclick="window.location.href='index.html'">Go Back</button>
+    </div>
+
+    <script>
+        function generateNews() {
+            const targetName = localStorage.getItem("targetName") || "Unknown Victim";
+
+            const headlines = [
+                `🚨 ${targetName} has mysteriously disappeared!`,
+                `😱 Police baffled as ${targetName} vanishes without a trace!`,
+                `🕵️‍♂️ FBI launches investigation into ${targetName}'s sudden disappearance!`,
+                `🔴 Breaking: A masked figure was spotted near ${targetName}'s house last night!`,
+                `🎭 Assassin leaves a calling card after dealing with ${targetName}!`
+            ];
+
+            const witnessReports = [
+                `"I saw someone in a pizza delivery outfit enter the house... and then silence." - Anonymous Neighbor`,
+                `"A man wearing sunglasses at night was acting suspiciously." - Bystander`,
+                `"They left a note saying 'LOL, too easy.'" - Police Report`,
+                `"All I heard was dramatic background music... then BOOM!" - Random Citizen`
+            ];
+
+            const policeUpdates = [
+                `"Authorities say they are investigating but have no leads yet."`,
+                `"The suspect has vanished, and the case remains unsolved."`,
+                `"A strange figure was seen escaping in a clown car. We are confused."`,
+                `"The only clue found was a banana peel near the crime scene."`
+            ];
+
+            // Randomly generate a news report
+            const headline = headlines[Math.floor(Math.random() * headlines.length)];
+            const witness = witnessReports[Math.floor(Math.random() * witnessReports.length)];
+            const police = policeUpdates[Math.floor(Math.random() * policeUpdates.length)];
+
+            document.getElementById("news-article").innerHTML = `
+                <h2>${headline}</h2>
+                <p>Eyewitness Report: <em>${witness}</em></p>
+                <p>Latest Police Update: <strong>${police}</strong></p>
+            `;
+        }
+    </script>
+</body>
+</html>
