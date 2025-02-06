@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake 911 Call</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .menu {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            cursor: pointer;
+            font-size: 30px;
+            user-select: none;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 10px;
+            background: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .dropdown a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 5px;
+        }
+        .dropdown a:hover {
+            background: #555;
+        }
+        .calling {
+            font-size: 24px;
+            color: red;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hamburger Menu -->
+    <div class="menu" onclick="toggleMenu()">☰</div>
+    
+    <!-- Dropdown -->
+    <div class="dropdown" id="menu-dropdown">
+        <a href="#" onclick="fakeCall()">📞 Contact Us</a>
+    </div>
+
+    <!-- Fake Call Message -->
+    <div id="call-message" class="calling">Calling 911... 📞🚨</div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("menu-dropdown");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
+        function fakeCall() {
+            document.getElementById("call-message").style.display = "block";
+            let messages = [
+                "Calling 911... 📞🚔",
+                "The FBI is tracking you now. 😈",
+                "Oops! Your location is shared with the police. 🚓",
+                "You're officially on the wanted list. 🕵️‍♂️",
+                "Emergency services are laughing at you. 🤣",
+                "911: 'Sir, is this another prank call?!' 🤨",
+                "Your phone is now a walkie-talkie for the cops. 🎙️"
+            ];
+            let index = 0;
+            let interval = setInterval(() => {
+                if (index >= messages.length) {
+                    clearInterval(interval);
+                    document.getElementById("call-message").textContent = "Call Disconnected. 😎";
+                } else {
+                    document.getElementById("call-message").textContent = messages[index];
+                    index++;
+                }
+            }, 2000); // Change message every 2 seconds
+        }
+    </script>
+
+</body>
+</html>
